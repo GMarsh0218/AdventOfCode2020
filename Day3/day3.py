@@ -17,9 +17,9 @@ def traverseMap(slope):
 
 def part2():
     slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]  # (right, down)
-    x = traverseMap(slopes[0])
-    for i in range(1, len(slopes)):
-        x = x * traverseMap(slopes[i])
+    x = 1
+    for slope in slopes:
+        x = x * traverseMap(slope)
     return x
 
 
