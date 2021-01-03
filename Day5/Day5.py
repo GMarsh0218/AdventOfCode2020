@@ -1,24 +1,25 @@
-from statistics import median_high, median_low
+from statistics import median_low
 
 with open("input.txt") as fo:
     seatdata = [line.rstrip() for line in fo]
 
+def bsp(code, min, max):
+    chars = range(min, max+1)
+    for i in range(len(code)):
+        if len(chars) == 2:
+            return chars[1] if code[i] == 'B' else chars[0]
+        if code[i] == 'B':  # take upper half
+            min += len(chars) // 2
+        else:
+            max = median_low(chars)
+        chars = range(min, max + 1)
+
 
 def getSeatID(seatCode):
-    rowCode = seatCode[:7]
-    min, max = 0, 127
-    rows = range(min, max + 1)
-    for i in range(len(rowCode)):
-        if len(rows) == 2:
-            row = rows[1] if rowCode[i] == 'B' else rows[0]
-        if rowCode[i] == 'B':  # take upper half
-            min += len(rows) // 2
-        else:
-            max = median_low(rows)
-        rows = range(min, max + 1)
+    rowCode, colCode = seatCode[:7] ,seatCode[-3:]
+    row = (rowCode, 0, 127)
 
-    colCode = seatCode[-3:]
-    min, max = 0, 7
+
     cols = range(min, max + 1)
     for i in range(len(colCode)):
         if len(cols) == 2:
